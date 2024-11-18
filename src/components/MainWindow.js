@@ -45,7 +45,7 @@ const MainWindow = () => {
     };
 
     return (
-        <div>
+        <div className='bg-gray-200 h-screen w-full'>
             {/* Шапка */}
             <div>
                 {/* Кнопки вопроса и меню */}
