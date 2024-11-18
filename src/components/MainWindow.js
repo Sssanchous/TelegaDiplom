@@ -35,7 +35,7 @@ const MainWindow = () => {
     const handleButtonClick = async () => {
         try {
             setIsRotating(true);
-            const data = await fetchDataFromAPI(mode, selectedOption);
+            const data = await fetchDataFromAPI(mode, selectedOption, inputValue);
             setResult(data);
         } catch (error) {
             setResult('Ошибка при запросе');
@@ -59,7 +59,7 @@ const MainWindow = () => {
                 </div>
             </div>
             {/* Основной код */}
-            <div className='mt-12 px-[9%] h-screen'>
+            <div className="flex-grow mt-12 px-[9%] flex flex-col justify-between">
                 {/* Переключатель режимов */}
                 <div className='flex items-center'>
                     <p className='font-montserrat font-bold italic text-lg'>
