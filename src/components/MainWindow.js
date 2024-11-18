@@ -59,7 +59,7 @@ const MainWindow = () => {
                 </div>
             </div>
             {/* Основной код */}
-            <div className='mt-12 px-[9%]'>
+            <div className='mt-12 px-[9%] h-screen'>
                 {/* Переключатель режимов */}
                 <div className='flex items-center'>
                     <p className='font-montserrat font-bold italic text-lg'>
