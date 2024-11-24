@@ -5,13 +5,18 @@ import menu_icon from '../images/menu.png';
 import logo_icon from '../images/logo.png';
 import swap_arrows_icon from '../images/swap_arrow.png';
 import button_icon from '../images/button2.png';
+import QuestionScreen from './QuestionWindow';  // Импортируем компонент всплывающего окна
+import MenuSidebar from './MenuSidebar'; // Импортируем боковое меню
+
 
 const MainWindow = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // Состояние для меню
     const [inputValue, setInputValue] = useState('');
     const [mode, setMode] = useState(1);
     const [isRotating, setIsRotating] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
     const [result, setResult] = useState('');
+    const [isQuestionVisible, setisQuestionVisible] = useState(false);  // Состояние для видимости всплывающего окна
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
@@ -44,22 +49,52 @@ const MainWindow = () => {
         }
     };
 
+    const handleQuestionClick = () => {
+        setisQuestionVisible(true);  // Показываем всплывающее окно
+    };
+
+    const handleCloseQuestionWindow = () => {
+        setisQuestionVisible(false);  // Скрываем всплывающее окно
+    };
+    const handleMenuClick = () => {
+        setIsMenuOpen(true); // Открываем меню
+    };
+
+    const handleCloseMenu = () => {
+        setIsMenuOpen(false); // Закрываем меню
+    };
+
     return (
-        <div className='bg-gray-200 h-screen w-full'>
-            {/* Шапка */}
+        <div className="bg-gray-200 h-screen w-full flex flex-col">
+        {/* Шапка */}
+        <div className="flex justify-between px-5 mt-6">
+            {/* Кнопки вопроса и меню */}
+            <img 
+                src={question_icon} 
+                alt="question" 
+                className="w-8 h-8 cursor-pointer" 
+                onClick={handleQuestionClick} // Обработчик клика на кнопку вопроса
+            />
+            <img
+                src={menu_icon}
+                alt="menu"
+                className="w-8 h-8 cursor-pointer"
+                onClick={handleMenuClick} // Обработчик клика для открытия меню
+            />
+        </div>
+        
+        {/* Логотип */}
+        <div className="flex-grow flex justify-center items-center">
+            <img 
+                src={logo_icon} 
+                alt="logo" 
+                className="w-[50%] h-auto" 
+            />
+        </div>
+        {/* Основной контент с растяжением */}
+        <div className="flex flex-col flex-grow mt-4 px-[9%]">
+            {/* Ваш основной контент */}
             <div>
-                {/* Кнопки вопроса и меню */}
-                <div className='flex justify-between'>
-                    <img src={question_icon} alt="question" className="w-8 h-8 ml-5 mt-6" />
-                    <img src={menu_icon} alt="menu" className="w-8 h-8 mr-5 mt-6" />
-                </div>
-                {/* Логотип */}
-                <div className='flex-grow flex justify-center items-center'>
-                    <img src={logo_icon} alt="logo" className="w-40 h-32" />
-                </div>
-            </div>
-            {/* Основной код */}
-            <div className="flex-grow mt-12 px-[9%] flex flex-col justify-between">
                 {/* Переключатель режимов */}
                 <div className='flex items-center'>
                     <p className='font-montserrat font-bold italic text-lg'>
@@ -89,57 +124,64 @@ const MainWindow = () => {
                         className="w-full bg-transparent border-none outline-none text-lg"
                     />
                 </div>
-                <div className="flex justify-between items-center">
-                    <div className="flex-grow">
-                        {/* Название параметра */}
-                        <div className="flex">
-                        <p className="font-montserrat font-bold italic text-lg">
-                            {mode === 1 ? 'Часть речи' : 'Выбранное слово'}
-                        </p>
-                        </div>
-                        {/* Настройки параметра */}
-                        <div className="w-4/5 bg-white text-black py-4 rounded-2xl text-lg mt-3 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
+            </div>
+            {/* Второй блок */}
+            <div className="flex justify-between items-center">
+                <div className="flex-grow">
+                    {/* Название параметра */}
+                    <div className="flex">
+                    <p className="font-montserrat font-bold italic text-lg">
+                        {mode === 1 ? 'Часть речи' : 'Выбранное слово'}
+                    </p>
+                    </div>
+                    {/* Настройки параметра */}
+                    <div className="w-4/5 bg-white text-black py-4 rounded-2xl text-lg mt-3 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
                         <select
                             value={selectedOption}
                             onChange={handleSelectChange}
                             className="w-full bg-transparent border-none outline-none text-lg"
                         >
                             <option value="" disabled>
-                            {mode === 1 ? 'Не выбрана часть речи' : 'Не выбрано слово'}
+                                {mode === 1 ? 'Не выбрана часть речи' : 'Не выбрано слово'}
                             </option>
                             {options.map((option, index) => (
-                            <option key={index} value={option}>
-                                {option}
-                            </option>
+                                <option key={index} value={option}>
+                                    {option}
+                                </option>
                             ))}
                         </select>
-                        </div>
-                    </div>
-                    {/* Кнопка лемматизации */}
-                    <div className="flex-shrink-0 ml-4">
-                        <button
-                        onClick={handleButtonClick}
-                        className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
-                        >
-                        <img src={button_icon} alt="button" className="w-32 h-32" />
-                        </button>
                     </div>
                 </div>
-                {/* Результат */}
-                <div className='mt-5'>
-                    <p className='font-montserrat font-bold italic text-lg'>Лемма вашего слова</p>
-                    <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 mb-4 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
-                        <input
-                            type="text"
-                            value={result}
-                            readOnly
-                            placeholder="Результат"
-                            className="w-full bg-transparent border-none outline-none text-lg"
-                        />
-                    </div>
+                {/* Кнопка лемматизации */}
+                <div className="flex-shrink-0 ml-4">
+                    <button
+                    onClick={handleButtonClick}
+                    className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
+                    >
+                    <img src={button_icon} alt="button" className="w-32 h-32" />
+                    </button>
+                </div>
+            </div>
+            {/* Результат */}
+            <div className='mt-5'>
+                <p className='font-montserrat font-bold italic text-lg'>Лемма вашего слова</p>
+                <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 mb-4 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
+                    <input
+                        type="text"
+                        value={result}
+                        readOnly
+                        placeholder="Результат"
+                        className="w-full bg-transparent border-none outline-none text-lg"
+                    />
                 </div>
             </div>
         </div>
+    
+        {/* Всплывающее окно */}
+        {isQuestionVisible && <QuestionScreen onClose={handleCloseQuestionWindow} />}
+        <MenuSidebar isOpen={isMenuOpen} onClose={handleCloseMenu} />
+    </div>
+    
     );
 };
 
