@@ -77,10 +77,12 @@ const MenuSidebar = ({ isOpen, onClose }) => {
                 {/* Футер */}
                 <div className="w-full text-center text-sm opacity-75 pb-4">
                     <p>Разработано при поддержке НКРЯ</p>
-                    <p>Аналитик: Копырин Евгений</p>
-                    <p>Разработчик: Сагадеев Артур</p>
+                    <p>
+                    Аналитик: <a href="https://vk.com/evgen_k45" target="_blank" class="underline">Evgeshkins</a> |
+                    Разработчик: <a href="https://vk.com/sagadeev0" target="_blank" class="underline">Ostamer</a>
+                    </p>
                     <p>Email: lemmatize@gmail.com</p>
-                    <p>Тюмгу 2024 год</p>
+                    <p>ТюмГУ 2024 год</p>
                 </div>
             </div>
         </motion.div>

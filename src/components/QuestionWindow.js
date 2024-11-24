@@ -33,7 +33,7 @@ const QuestionScreen = ({ onClose }) => {
         <img 
           src={close} 
           alt="Close" 
-          className="absolute fixed bottom-0 mb-5 left-1/2 transform -translate-x-1/2 h-7 w-7 rounded-lg cursor-pointer mt-4" 
+          className="absolute fixed bottom-7 mb-5 left-1/2 transform -translate-x-1/2 h-7 w-7 rounded-lg cursor-pointer mt-4" 
         />
       </button>
     </motion.div>
