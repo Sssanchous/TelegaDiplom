@@ -11,18 +11,11 @@ const QuestionScreen = ({ onClose }) => {
 
   return (
     <motion.div 
-      className="absolute inset-0 flex flex-col items-center justify-center z-40 rounded-b-3xl"
+      className="absolute font-montserrat inset-0 bg-gray-700 flex flex-col bg-opacity-85 items-center justify-center z-40 rounded-b-3xl"
       initial="hidden"
       animate="visible"
       variants={animation} 
       transition={{ duration: 0.1 }} 
-      style={{ 
-        backgroundImage: `url(${back_ground_image})`,
-        backgroundSize: 'cover', 
-        backgroundPosition: 'center',
-        height: '100%', 
-        overflow: 'hidden' 
-      }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-60" />
       <div className="relative text-white w-full text-center px-4">

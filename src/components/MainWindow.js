@@ -57,7 +57,12 @@ const MainWindow = () => {
         setisQuestionVisible(false);  // Скрываем всплывающее окно
     };
     const handleMenuClick = () => {
-        setIsMenuOpen(true); // Открываем меню
+        if(isMenuOpen==false){
+            setIsMenuOpen(true); // Открываем меню
+        }
+        else{
+            setIsMenuOpen(false);
+        }
     };
 
     const handleCloseMenu = () => {
@@ -153,7 +158,7 @@ const MainWindow = () => {
                     </div>
                 </div>
                 {/* Кнопка лемматизации */}
-                <div className="flex-shrink-0 ml-4">
+                <div className="flex-shrink-0 ml-4 mt-3">
                     <button
                     onClick={handleButtonClick}
                     className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}

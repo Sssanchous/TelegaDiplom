@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const MenuSidebar = ({ isOpen, onClose }) => {
+    const sidebarRef = useRef(); // Ссылка на боковое меню
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            // Если клик произошел не внутри меню
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+                onClose(); // Закрыть меню
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('mousedown', handleOutsideClick);
+        }
+
+        return () => {
+            // Удаляем обработчик событий при размонтировании или закрытии меню
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [isOpen, onClose]);
+
     const sidebarVariants = {
         hidden: { y: '100%' }, // Скрытое состояние (за пределами экрана снизу)
         visible: { y: 0 },    // Видимое состояние
@@ -9,6 +29,7 @@ const MenuSidebar = ({ isOpen, onClose }) => {
 
     return (
         <motion.div
+            ref={sidebarRef}
             initial="hidden"
             animate={isOpen ? "visible" : "hidden"} 
             variants={sidebarVariants}
@@ -17,7 +38,7 @@ const MenuSidebar = ({ isOpen, onClose }) => {
             style={{ height: '65vh', minHeight: '300px' }}
         >
             {/* Закрывающая кнопка */}
-            <div className="flex justify-end p-4">
+            <div className="flex justify-end py-3 px-6">
                 <button
                     onClick={onClose}
                     className="text-white text-2xl font-bold focus:outline-none"
@@ -27,8 +48,8 @@ const MenuSidebar = ({ isOpen, onClose }) => {
             </div>
             
             {/* Содержимое меню */}
-            <div className="px-4 text-white flex flex-col items-center justify-between" style={{ height: '60%' }}>
-            {/* Фото */}
+            <div className="font-montserrat px-4 text-white flex flex-col items-center justify-between" style={{ height: '85%' }}>
+                {/* Фото */}
                 <div 
                     className="rounded-full bg-gray-700 flex items-center justify-center text-lg font-bold text-white"
                     style={{ width: '40%', aspectRatio: '1/1' }}
@@ -54,10 +75,11 @@ const MenuSidebar = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Футер */}
-                <div className="absolute bottom-0 w-full text-center text-sm opacity-75 pb-4">
+                <div className="w-full text-center text-sm opacity-75 pb-4">
                     <p>Разработано при поддержке НКРЯ</p>
-                    <p>Телефон: +7 (919) 597-00-65</p>
-                    <p>Email: artur_sagadeev@bk.ru</p>
+                    <p>Аналитик: Копырин Евгений</p>
+                    <p>Разработчик: Сагадеев Артур</p>
+                    <p>Email: lemmatize@gmail.com</p>
                     <p>Тюмгу 2024 год</p>
                 </div>
             </div>
