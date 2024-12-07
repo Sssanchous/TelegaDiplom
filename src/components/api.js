@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchDataFromAPI = async (mode, selectedOption, inputValue) => {
     try {
-        const response = await axios.get('https://176.114.89.106:8000/lemmatize', {
+        const response = await axios.get('https://176.114.89.106/lemmatize', {
             params: { 
                 mode, 
                 selected_option: selectedOption, // Приведение к ожидаемому сервером имени
