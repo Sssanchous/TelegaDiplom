@@ -11,11 +11,12 @@ module.exports = {
       http: require.resolve('stream-http'),
     };
 
-    // Разрешаем импорт модуля https-browserify из новой папки src/libs
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'https-browserify': path.resolve(__dirname, 'src/libs/https-browserify'),
-    };
+    // Если вы хотите использовать https-browserify, указывать путь к нему в src/libs не нужно.
+    // Достаточно использовать require.resolve для указания местоположения пакета.
+    // config.resolve.alias = {
+    //   ...config.resolve.alias,
+    //   'https-browserify': path.resolve(__dirname, 'src/libs/https-browserify'),
+    // };
 
     console.log('Webpack config after modification:', config);  // Лог после изменений
 
