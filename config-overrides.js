@@ -10,11 +10,6 @@ module.exports = {
       http: require.resolve('stream-http'),
     };
 
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'https-browserify': path.resolve(__dirname, 'src/libs/https-browserify'), // Указываем путь к вашему файлу
-    };
-
     console.log('Webpack config after modification:', config);
 
     return config;
