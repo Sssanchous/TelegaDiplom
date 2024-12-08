@@ -9,10 +9,10 @@ module.exports = {
       http: require.resolve('stream-http'),
     };
 
-    // Разрешаем импорт модуля https-browserify из node_modules
+    // Разрешаем импорт модуля https-browserify из новой папки src/libs
     config.resolve.alias = {
       ...config.resolve.alias,
-      'https-browserify': path.resolve(__dirname, 'node_modules/https-browserify'),
+      'https-browserify': path.resolve(__dirname, 'src/libs/https-browserify'),
     };
 
     return config;
