@@ -1,8 +1,9 @@
 import axios from 'axios';
+import https from 'https-browserify';  // Импортируем локальную версию https
 
-// Создаем экземпляр axios с отключением проверки сертификатов
+// Создаем экземпляр axios с использованием локального https
 const axiosInstance = axios.create({
-  httpsAgent: new (require('https').Agent)({ rejectUnauthorized: false })
+  httpsAgent: new https.Agent({ rejectUnauthorized: false })  // Используем локальную версию https
 });
 
 export const fetchDataFromAPI = async (mode, selectedOption, inputValue) => {
