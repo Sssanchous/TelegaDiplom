@@ -39,12 +39,10 @@ export const fetchDataFromAPI = async (mode, selectedOption, inputValue) => {
         selectedOption = "All"
       }
     }
-    const response = await axios.get('https://lemmaapp.ru/lemmatize', {
-      params: {
-        mode: mode,
-        selected_option: selectedOption,
-        input_value: inputValue,
-      },
+    const response = await axios.post('https://lemmaapp.ru/lemmatize', {
+      mode: mode,
+      selected_option: selectedOption,
+      input_value: inputValue,
     });
     return response.data.lemma;
   } catch (error) {
