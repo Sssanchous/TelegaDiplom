@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { fetchDataFromAPI } from "./api"; // Импортируем функцию из api.js
 import question_icon from "../images/question.png";
 import menu_icon from "../images/menu.png";
@@ -16,6 +16,8 @@ function Web() {
   const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для модального окна
   const [modalMode, setModalMode] = useState('login'); // Режим модального окна: 'login' или 'register'
   const [isProcessing, setIsProcessing] = useState(false); // Состояние для отслеживания процесса лемматизации
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Состояние авторизации
+  const [history, setHistory] = useState([]); // История действий пользователя
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -92,6 +94,83 @@ function Web() {
     setModalMode((prevMode) => (prevMode === 'login' ? 'register' : 'login'));
   };
 
+  // Функция авторизации пользователя
+  const handleLogin = async (login, password) => {
+    try {
+      const response = await fetch("https://lemmaapp.ru/login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ login, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem("token", data.access_token); // Сохраняем токен в localStorage
+        setIsLoggedIn(true);
+        closeModal();
+      } else {
+        alert(data.detail || "Ошибка авторизации");
+      }
+    } catch (error) {
+      console.error("Ошибка авторизации:", error);
+    }
+  };
+
+  // Функция регистрации пользователя
+  const handleRegister = async (name, surname, login, password) => {
+    try {
+      const response = await fetch("http://lemmaapp.ru/register/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, surname, login, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("Регистрация успешна! Теперь вы можете войти.");
+        setModalMode("login"); // Переключаемся на форму входа
+      } else {
+        alert(data.detail || "Ошибка регистрации");
+      }
+    } catch (error) {
+      console.error("Ошибка регистрации:", error);
+    }
+  };
+
+  // Получение истории пользователя
+  const fetchHistory = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const response = await fetch("http://lemmaapp.ru/history/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setHistory(data);
+      } else {
+        alert("Ошибка загрузки истории");
+      }
+    } catch (error) {
+      console.error("Ошибка загрузки истории:", error);
+    }
+  };
+
+  // Выход из аккаунта
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setHistory([]);
+  };
+
+  // Проверяем наличие токена при загрузке страницы
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+      fetchHistory();
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center">
       {/* Header */}
@@ -102,17 +181,28 @@ function Web() {
             <p className="font-montserrat font-bold text-xl md:text-2xl ml-2 hidden sm:block">НейроЛемма</p>
           </div>
           <nav className="space-x-4 text-gray-1000 text-xl md:text-2xl flex items-center gap-2 md:gap-5">
-            <button onClick={() => openModal('login')} className="hover:text-gray-700">
-              Вход
-            </button>
-            <button onClick={() => openModal('register')} className="hover:text-gray-700">
-              Регистрация
-            </button>
+            {isLoggedIn ? (
+              <>
+                <button onClick={fetchHistory} className="hover:text-gray-700">
+                  История
+                </button>
+                <button onClick={handleLogout} className="hover:text-gray-700">
+                  Выйти
+                </button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => openModal('login')} className="hover:text-gray-700">
+                  Вход
+                </button>
+                <button onClick={() => openModal('register')} className="hover:text-gray-700">
+                  Регистрация
+                </button>
+              </>
+            )}
           </nav>
         </div>
       </header>
-
-
 
       {/* Модальное окно */}
       <Modal 
