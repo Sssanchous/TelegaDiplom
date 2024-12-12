@@ -373,7 +373,7 @@ function Web() {
                   disabled={isProcessing} // Блокируем кнопку, если идет лемматизация
                   className="flex items-center justify-center bg-gray-200 p-2 rounded-full shadow-md hover:scale-110 transition-transform"
                 >
-                  <img src={swap_arrows_icon} alt="swap" className="w-4 h-4 lg:w-6 lg:h-6" />
+                  <img src={swap_arrows_icon} alt="swap" className="w-4 h-4 lg:w-6 lg:h-6 min-w-4 min-h-4 lg:min-w-6 lg:min-h-6" />
                 </button>
                 <button
                   onClick={() => setMode(2)}
