@@ -118,7 +118,7 @@ function Web() {
   // Функция регистрации пользователя
   const handleRegister = async (name, surname, login, password) => {
     try {
-      const response = await fetch("http://lemmaapp.ru/register/", {
+      const response = await fetch("https://lemmaapp.ru/register/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, surname, login, password }),
@@ -141,7 +141,7 @@ function Web() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await fetch("http://lemmaapp.ru/history/", {
+      const response = await fetch("https://lemmaapp.ru/history/", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -205,12 +205,142 @@ function Web() {
       </header>
 
       {/* Модальное окно */}
-      <Modal 
-        isOpen={isModalOpen} 
-        closeModal={closeModal} 
-        modalMode={modalMode} 
-        handleSwitchForm={handleSwitchForm} // Передаем функцию переключения
-      />
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
+          {modalMode === 'login' ? (
+            <div className="p-6">
+              <h2 className="text-2xl font-bold mb-4">Вход</h2>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const login = e.target.login.value;
+                  const password = e.target.password.value;
+                  handleLogin(login, password);
+                }}
+              >
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="login">
+                    Логин
+                  </label>
+                  <input
+                    type="text"
+                    id="login"
+                    name="login"
+                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="password">
+                    Пароль
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                    required
+                  />
+                </div>
+                <div className="flex justify-between items-center">
+                  <button
+                    type="button"
+                    onClick={handleSwitchForm}
+                    className="text-blue-500 hover:underline"
+                  >
+                    Регистрация
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                  >
+                    Войти
+                  </button>
+                </div>
+              </form>
+            </div>
+          ) : (
+            <div className="p-6">
+              <h2 className="text-2xl font-bold mb-4">Регистрация</h2>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const name = e.target.name.value;
+                  const surname = e.target.surname.value;
+                  const login = e.target.login.value;
+                  const password = e.target.password.value;
+                  handleRegister(name, surname, login, password);
+                }}
+              >
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="name">
+                    Имя
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="surname">
+                    Фамилия
+                  </label>
+                  <input
+                    type="text"
+                    id="surname"
+                    name="surname"
+                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="login">
+                    Логин
+                  </label>
+                  <input
+                    type="text"
+                    id="login"
+                    name="login"
+                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="password">
+                    Пароль
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                    required
+                  />
+                </div>
+                <div className="flex justify-between items-center">
+                  <button
+                    type="button"
+                    onClick={handleSwitchForm}
+                    className="text-blue-500 hover:underline"
+                  >
+                    Вход
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                  >
+                    Зарегистрироваться
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+        </Modal>
+      )}
+ 
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 lg:py-12 text-center lg:w-[80%] w-full">
