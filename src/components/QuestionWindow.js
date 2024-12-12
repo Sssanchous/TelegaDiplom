@@ -21,12 +21,8 @@ const QuestionScreen = ({ onClose }) => {
       <div className="relative text-white w-full text-center px-4">
         <h1 className="text-2xl font-bold">Вас приветствует сервис</h1>
         <h2 className="text-2xl font-bold">НейроЛемма</h2>
-        <p className="mt-2 text-base">
-          Нажмите на кнопку<br />
-          "Добавить ещё" внизу экрана для<br />
-          добавления вашего автомобиля в <br />
-
-          гараж приложения.
+        <p className="mt-2 text-m">
+        Выберите режим (слово или предложение), введите текст и выберите часть речи или слово для лемматизации. Если вы хотите обработать весь текст, просто выберите "Всё предложение". 
         </p>
       </div>
       <button onClick={onClose}>
