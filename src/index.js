@@ -11,6 +11,7 @@ const initializeTelegramSDK = async () => {
   try {
     console.log("Инициализация окружения Telegram");
     init();
+    console.log(init())
     console.log(initDataUser());
   } catch (error) {
     console.error('Ошибка при инициализации Telegram:', error);
