@@ -73,12 +73,12 @@ import "./css/index.css";
 import '@fontsource/montserrat';
 import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/700-italic.css';
-import { initMiniApp } from '@telegram-apps/sdk';
+import { init } from '@telegram-apps/sdk-react';
 
 const initializeTelegramSDK = async () => {
   try {
     console.log("Инициализация окружения Telegram");
-    const [miniApp] = initMiniApp(); // Инициализация настоящего SDK
+    const [miniApp] = init(); // Инициализация настоящего SDK
     await miniApp.ready();
   } catch (error) {
     console.error('Ошибка при инициализации Telegram SDK:', error);
