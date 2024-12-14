@@ -1,42 +1,52 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { initMiniApp } from '@telegram-apps/sdk'; // Импортируем SDK Telegram
 
-const MenuSidebar = ({ isOpen, onClose, user }) => {
+const MenuSidebar = ({ isOpen, onClose }) => {
     const sidebarRef = useRef(); // Ссылка на боковое меню
+    const [user, setUser] = useState(null); // Состояние для данных пользователя
 
     useEffect(() => {
-        const handleOutsideClick = (event) => {
-            // Если клик произошел не внутри меню
-            if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-                onClose(); // Закрыть меню
+        const initializeUser = async () => {
+            try {
+                // Инициализация мини-приложения
+                const [miniApp] = initMiniApp();
+                
+                // Получение данных пользователя
+                const userData = miniApp.initData?.user || {};
+                
+                // Установка состояния пользователя
+                setUser({
+                    id: userData.id,
+                    firstName: userData.first_name,
+                    lastName: userData.last_name,
+                    username: userData.username,
+                });
+            } catch (error) {
+                console.error('Ошибка получения данных пользователя:', error);
             }
         };
 
         if (isOpen) {
-            document.addEventListener('mousedown', handleOutsideClick);
+            initializeUser(); // Инициализируем данные пользователя, когда меню открыто
         }
-
-        return () => {
-            // Удаляем обработчик событий при размонтировании или закрытии меню
-            document.removeEventListener('mousedown', handleOutsideClick);
-        };
-    }, [isOpen, onClose]);
-
-    const sidebarVariants = {
-        hidden: { y: '100%' }, // Скрытое состояние (за пределами экрана снизу)
-        visible: { y: 0 },    // Видимое состояние
-    };
+    }, [isOpen]); // Запускаем эффект, когда меню открыто
 
     // Ссылка на аватар пользователя
     const avatarUrl = user?.id
         ? `https://t.me/i/userpic/320/${user.id}.jpg`
         : null;
 
+    const sidebarVariants = {
+        hidden: { y: '100%' }, // Скрытое состояние (за пределами экрана снизу)
+        visible: { y: 0 },    // Видимое состояние
+    };
+
     return (
         <motion.div
             ref={sidebarRef}
             initial="hidden"
-            animate={isOpen ? "visible" : "hidden"} 
+            animate={isOpen ? "visible" : "hidden"}
             variants={sidebarVariants}
             transition={{ type: 'spring', stiffness: 300, damping: 50 }}
             className="fixed bottom-0 left-0 w-full max-h-screen bg-black bg-opacity-90 backdrop-blur-md shadow-lg z-50 overflow-hidden"
@@ -63,7 +73,7 @@ const MenuSidebar = ({ isOpen, onClose, user }) => {
                         style={{ width: '40%', aspectRatio: '1/1', objectFit: 'cover' }}
                     />
                 ) : (
-                    <div 
+                    <div
                         className="rounded-full bg-gray-700 flex items-center justify-center text-lg font-bold text-white"
                         style={{ width: '40%', aspectRatio: '1/1' }}
                     >
@@ -72,7 +82,7 @@ const MenuSidebar = ({ isOpen, onClose, user }) => {
                 )}
 
                 {/* Фамилия и имя */}
-                <p 
+                <p
                     className="font-semibold text-center mt-4"
                     style={{
                         fontSize: 'clamp(1rem, 7.5vw, 2rem)', 
@@ -92,8 +102,8 @@ const MenuSidebar = ({ isOpen, onClose, user }) => {
                 <div className="w-full text-center text-sm opacity-75 pb-4">
                     <p>Разработано при поддержке НКРЯ</p>
                     <p>
-                    Аналитик: <a href="https://vk.com/evgen_k45" target="_blank" className="underline">Evgeshkins</a> |
-                    Разработчик: <a href="https://vk.com/sagadeev0" target="_blank" className="underline">Ostamer</a>
+                        Аналитик: <a href="https://vk.com/evgen_k45" target="_blank" className="underline">Evgeshkins</a> |
+                        Разработчик: <a href="https://vk.com/sagadeev0" target="_blank" className="underline">Ostamer</a>
                     </p>
                     <p>Email: lemmatize@gmail.com</p>
                     <p>ТюмГУ 2024 год</p>
