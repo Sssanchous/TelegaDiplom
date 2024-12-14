@@ -17,8 +17,8 @@ const initializeTelegramSDK = async () => {
     // Сохраняем данные в глобальную переменную
     window.userData = {
       id: user.id,
-      firstName: user.first_name,
-      lastName: user.last_name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       username: user.username,
       photoUrl: user.photoUrl, // если есть
     };
