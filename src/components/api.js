@@ -47,7 +47,7 @@ export const fetchDataFromAPI = async (mode, selectedOption, inputValue, token) 
     });
 
     const result = response.data.lemma; // Получаем результат обработки
-    
+    console.log(token)
     if (token) {
       handleHisoryPost(inputValue, selectedOption, mode, result,token);
     }
@@ -59,47 +59,40 @@ export const fetchDataFromAPI = async (mode, selectedOption, inputValue, token) 
 };
 
 
-const handleHisoryPost = async (inputValue, selectedOption, mode, result,token) => {
+const handleHisoryPost = async (inputValue, selectedOption, mode, result, token) => {
   try {
-    var start_word=inputValue;
+    let start_word = inputValue;
     if (mode === 2) {
-      if (selectedOption === "All") {
-         start_word = inputValue
-      }
-      else{
-        start_word = selectedOption
-      }
+      start_word = selectedOption === "All" ? inputValue : selectedOption;
     }
 
     const response = await fetch("https://lemmaapp.ru/server1/history", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`, // Добавляем токен в заголовок
       },
       body: JSON.stringify({
-        user_id: token,
         word: start_word,
         lemmatize_type: mode,
         result: result,
-      })
-      
+      }),
     });
+
     if (!response.ok) {
       const data = await response.json();
       console.error("Ошибка записи истории:", data.detail || response.statusText);
-      
     }
   } catch (error) {
     console.error("Ошибка при записи истории:", error);
     console.log({
-      user_id: token,
       word: start_word,
       lemmatize_type: mode,
       result: result,
     });
-    
   }
 };
+
 
 // authService.js
 
