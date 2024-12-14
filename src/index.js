@@ -6,12 +6,14 @@ import '@fontsource/montserrat';
 import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/700-italic.css';
 import { init, retrieveLaunchParams, mockTelegramEnv } from '@telegram-apps/sdk-react';
+import { InitData } from "@telegram-apps/sdk";
 
 const initializeTelegramSDK = async () => {
   try {
     console.log("Инициализация окружения Telegram");
     init();
     const { initDataRaw, initData } = retrieveLaunchParams();
+    console.log(initData)
     const user = JSON.parse(initData.user);
     console.log("ID пользователя:", user.id);
     console.log("Имя пользователя:", user.first_name);
