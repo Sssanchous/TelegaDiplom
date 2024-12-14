@@ -1,29 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { initMiniApp } from '@telegram-apps/sdk'; // Импортируем SDK Telegram
 
 const MenuSidebar = ({ isOpen, onClose }) => {
     const sidebarRef = useRef(); // Ссылка на боковое меню
     const [user, setUser] = useState(null); // Состояние для данных пользователя
 
     useEffect(() => {
-        const initializeUser = async () => {
-            try {
-                // Инициализация мини-приложения
-                const [miniApp] = initMiniApp();
-                
-                // Получение данных пользователя
-                const userData = miniApp.initData?.user || {};
-                
-                // Установка состояния пользователя
+        // Проверка, если Telegram SDK уже инициализирован
+        const initializeUser = () => {
+            const miniApp = window.Telegram ? window.Telegram : null; // Используем глобальный объект Telegram
+
+            if (miniApp && miniApp.initData?.user) {
+                const userData = miniApp.initData.user;
+
                 setUser({
                     id: userData.id,
                     firstName: userData.first_name,
                     lastName: userData.last_name,
                     username: userData.username,
                 });
-            } catch (error) {
-                console.error('Ошибка получения данных пользователя:', error);
+            } else {
+                console.error('Telegram SDK не инициализирован или нет данных о пользователе.');
             }
         };
 
