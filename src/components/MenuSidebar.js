@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
-const MenuSidebar = ({ isOpen, onClose }) => {
+const MenuSidebar = ({ isOpen, onClose, user }) => {
     const sidebarRef = useRef(); // Ссылка на боковое меню
 
     useEffect(() => {
@@ -27,6 +27,11 @@ const MenuSidebar = ({ isOpen, onClose }) => {
         visible: { y: 0 },    // Видимое состояние
     };
 
+    // Ссылка на аватар пользователя
+    const avatarUrl = user?.id
+        ? `https://t.me/i/userpic/320/${user.id}.jpg`
+        : null;
+
     return (
         <motion.div
             ref={sidebarRef}
@@ -50,12 +55,21 @@ const MenuSidebar = ({ isOpen, onClose }) => {
             {/* Содержимое меню */}
             <div className="font-montserrat px-4 text-white flex flex-col items-center justify-between" style={{ height: '85%' }}>
                 {/* Фото */}
-                <div 
-                    className="rounded-full bg-gray-700 flex items-center justify-center text-lg font-bold text-white"
-                    style={{ width: '40%', aspectRatio: '1/1' }}
-                >
-                    Фото
-                </div>
+                {avatarUrl ? (
+                    <img
+                        src={avatarUrl}
+                        alt="Аватар пользователя"
+                        className="rounded-full"
+                        style={{ width: '40%', aspectRatio: '1/1', objectFit: 'cover' }}
+                    />
+                ) : (
+                    <div 
+                        className="rounded-full bg-gray-700 flex items-center justify-center text-lg font-bold text-white"
+                        style={{ width: '40%', aspectRatio: '1/1' }}
+                    >
+                        Фото
+                    </div>
+                )}
 
                 {/* Фамилия и имя */}
                 <p 
@@ -64,7 +78,7 @@ const MenuSidebar = ({ isOpen, onClose }) => {
                         fontSize: 'clamp(1rem, 7.5vw, 2rem)', 
                     }}
                 >
-                    Фамилия Имя
+                    {user?.firstName || "Фамилия"} {user?.lastName || "Имя"}
                 </p>
 
                 {/* Кнопка */}
@@ -78,8 +92,8 @@ const MenuSidebar = ({ isOpen, onClose }) => {
                 <div className="w-full text-center text-sm opacity-75 pb-4">
                     <p>Разработано при поддержке НКРЯ</p>
                     <p>
-                    Аналитик: <a href="https://vk.com/evgen_k45" target="_blank" class="underline">Evgeshkins</a> |
-                    Разработчик: <a href="https://vk.com/sagadeev0" target="_blank" class="underline">Ostamer</a>
+                    Аналитик: <a href="https://vk.com/evgen_k45" target="_blank" className="underline">Evgeshkins</a> |
+                    Разработчик: <a href="https://vk.com/sagadeev0" target="_blank" className="underline">Ostamer</a>
                     </p>
                     <p>Email: lemmatize@gmail.com</p>
                     <p>ТюмГУ 2024 год</p>

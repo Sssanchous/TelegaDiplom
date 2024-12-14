@@ -402,7 +402,7 @@ function Web() {
           <p className="text-gray-600 text-xl lg:text-2xl mb-8">Сгенирируйте лемму для вашего текста</p>
         </div>
 
-        <div className="py-5 px-6 mb-16 shadow-sm flex flex-col lg:flex-row items-center gap-8 border-b border-gray-300">
+        <div className="py-5 px-2 mb-16 shadow-sm flex flex-col lg:flex-row items-center gap-24 border-b border-gray-300">
           {/* Левая панель */}
           <div className="flex flex-col mb-8 w-full lg:w-1/2 gap-12">
             <div className="flex flex-col items-center gap-4 mt-8">
