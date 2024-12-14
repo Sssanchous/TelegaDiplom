@@ -35,7 +35,7 @@ export const fetchDataFromAPI = async (mode, selectedOption, inputValue, token) 
       selectedOption = adaptSelectedOption(selectedOption);
     }
     if (mode === 2) {
-      if (selectedOption === "Все предложение") {
+      if (selectedOption === "Всё предложение") {
         selectedOption = "All";
       }
     }
@@ -77,7 +77,7 @@ const handleHisoryPost = async (inputValue, selectedOption, mode, result,token) 
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: 6,
+        user_id: token,
         word: start_word,
         lemmatize_type: mode,
         result: result,
