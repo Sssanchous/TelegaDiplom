@@ -111,33 +111,40 @@
 // };
 
 // export default MenuSidebar;
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const MenuSidebar = ({ isOpen, onClose }) => {
-    const sidebarRef = useRef();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);  // Состояние для данных пользователя
+    const [error, setError] = useState(null); // Состояние для ошибок
 
     useEffect(() => {
         const initializeUser = () => {
-            // Получаем объект Telegram SDK через глобальный window.Telegram
-            const miniApp = window.Telegram || null;
+            try {
+                // Проверка наличия Telegram SDK
+                const miniApp = window.Telegram || null;
 
-            if (miniApp && miniApp.initData && miniApp.initData.user) {
-                const userData = miniApp.initData.user;
-                setUser({
-                    id: userData.id,
-                    firstName: userData.first_name,
-                    lastName: userData.last_name,
-                    username: userData.username,
-                });
-            } else {
-                console.error('Telegram SDK не инициализирован или нет данных о пользователе.');
+                if (miniApp && miniApp.initData && miniApp.initData.user) {
+                    const userData = miniApp.initData.user;
+
+                    setUser({
+                        id: userData.id,
+                        firstName: userData.first_name,
+                        lastName: userData.last_name,
+                        username: userData.username,
+                    });
+                } else {
+                    throw new Error('Telegram SDK не инициализирован или нет данных о пользователе.');
+                }
+            } catch (err) {
+                // Логируем ошибку в консоль и отображаем ее в UI
+                console.error('Ошибка при инициализации данных пользователя:', err);
+                setError('Ошибка при инициализации данных пользователя',err);
             }
         };
 
         if (isOpen) {
-            initializeUser(); // Инициализируем данные о пользователе, когда меню открыто
+            initializeUser(); // Инициализируем данные пользователя, когда меню открыто
         }
     }, [isOpen]);
 
@@ -152,7 +159,6 @@ const MenuSidebar = ({ isOpen, onClose }) => {
 
     return (
         <motion.div
-            ref={sidebarRef}
             initial="hidden"
             animate={isOpen ? "visible" : "hidden"}
             variants={sidebarVariants}
@@ -170,6 +176,14 @@ const MenuSidebar = ({ isOpen, onClose }) => {
             </div>
 
             <div className="font-montserrat px-4 text-white flex flex-col items-center justify-between" style={{ height: '85%' }}>
+                {/* Отображение ошибки */}
+                {error && (
+                    <div className="bg-red-600 text-white p-4 rounded-lg mb-4 text-center">
+                        {error}
+                    </div>
+                )}
+
+                {/* Аватар пользователя */}
                 {avatarUrl ? (
                     <img
                         src={avatarUrl}
@@ -186,7 +200,7 @@ const MenuSidebar = ({ isOpen, onClose }) => {
                     </div>
                 )}
 
-                {/* Отображение имени и фамилии */}
+                {/* Фамилия и имя */}
                 <p className="font-semibold text-center mt-4" style={{ fontSize: 'clamp(1rem, 7.5vw, 2rem)' }}>
                     {user?.firstName || "Имя"} {user?.lastName || "Фамилия"}
                 </p>
@@ -195,16 +209,6 @@ const MenuSidebar = ({ isOpen, onClose }) => {
                     <button className="bg-white text-black w-full py-4 rounded-full text-xl font-bold hover:bg-gray-300 transition">
                         История
                     </button>
-                </div>
-
-                <div className="w-full text-center text-sm opacity-75 pb-4">
-                    <p>Разработано при поддержке НКРЯ</p>
-                    <p>
-                        Аналитик: <a href="https://vk.com/evgen_k45" target="_blank" className="underline">Evgeshkins</a> |
-                        Разработчик: <a href="https://vk.com/sagadeev0" target="_blank" className="underline">Ostamer</a>
-                    </p>
-                    <p>Email: lemmatize@gmail.com</p>
-                    <p>ТюмГУ 2024 год</p>
                 </div>
             </div>
         </motion.div>

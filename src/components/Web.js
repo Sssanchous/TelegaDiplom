@@ -126,6 +126,7 @@ function Web() {
       const token = localStorage.getItem("token");
 
       const data = await fetchDataFromAPI(mode, selectedOption, inputValue, token);
+      console.log(selectedOption)
       setResult(data);
     } catch (error) {
       setResult("Ошибка при запросе");
