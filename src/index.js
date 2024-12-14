@@ -5,14 +5,20 @@ import "./css/index.css";
 import '@fontsource/montserrat';
 import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/700-italic.css';
-import { init,initDataUser,  mockTelegramEnv, initData } from '@telegram-apps/sdk-react';
+import { init, retrieveLaunchParams, mockTelegramEnv } from '@telegram-apps/sdk-react';
 
 const initializeTelegramSDK = async () => {
   try {
     console.log("Инициализация окружения Telegram");
     init();
-    console.log(init())
-    console.log(initDataUser());
+    const { initDataRaw, initData } = retrieveLaunchParams();
+    const user = JSON.parse(initData.user);
+    console.log("ID пользователя:", user.id);
+    console.log("Имя пользователя:", user.first_name);
+    console.log("Логин пользователя:", user.username);
+    console.log("Язык пользователя:", user.language_code);
+    console.log("Премиум-подписка:", user.is_premium);
+    console.log("Разрешено отправлять сообщения в личку:", user.allows_write_to_pm);
   } catch (error) {
     console.error('Ошибка при инициализации Telegram:', error);
 
