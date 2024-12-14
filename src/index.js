@@ -6,15 +6,23 @@ import '@fontsource/montserrat';
 import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/700-italic.css';
 import { init, retrieveLaunchParams, mockTelegramEnv } from '@telegram-apps/sdk-react';
-import { InitData } from "@telegram-apps/sdk";
 
 const initializeTelegramSDK = async () => {
   try {
     console.log("Инициализация окружения Telegram");
     init();
     const { initDataRaw, initData } = retrieveLaunchParams();
-    console.log(initData)
-    const user = initData.user;  // Теперь не нужно JSON.parse, так как user уже объект
+    const user = initData.user;  // Данные пользователя уже объект
+
+    // Сохраняем данные в глобальную переменную
+    window.userData = {
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      username: user.username,
+      photoUrl: user.photoUrl, // если есть
+    };
+
     console.log("ID пользователя:", user.id);
     console.log("Имя пользователя:", user.first_name);
     console.log("Логин пользователя:", user.username);

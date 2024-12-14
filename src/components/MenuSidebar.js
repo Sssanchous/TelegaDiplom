@@ -6,33 +6,18 @@ const MenuSidebar = ({ isOpen, onClose }) => {
     const [user, setUser] = useState(null); // Состояние для данных пользователя
 
     useEffect(() => {
-        // Проверка, если Telegram SDK уже инициализирован
-        const initializeUser = () => {
-            const miniApp = window.Telegram ? window.Telegram : null; // Используем глобальный объект Telegram
+        // Получаем данные из глобальной переменной
+        const userData = window.userData;
 
-            if (miniApp && miniApp.initData?.user) {
-                const userData = miniApp.initData.user;
-
-                setUser({
-                    id: userData.id,
-                    firstName: userData.firstName,
-                    lastName: userData.lastName,
-                    username: userData.username,
-                    photoUrl: userData.photoUrl,
-                });
-            } else {
-                console.error('Telegram SDK не инициализирован или нет данных о пользователе.');
-            }
-        };
-
-        if (isOpen) {
-            initializeUser(); // Инициализируем данные пользователя, когда меню открыто
+        if (userData) {
+            setUser(userData);  // Сохраняем данные в состояние
+        } else {
+            console.error('Нет данных о пользователе.');
         }
-    }, [isOpen]); // Запускаем эффект, когда меню открыто
+    }, [isOpen]); // Эффект сработает, когда меню откроется
 
     // Ссылка на аватар пользователя
     const avatarUrl = user?.photoUrl || null;
-
 
     const sidebarVariants = {
         hidden: { y: '100%' }, // Скрытое состояние (за пределами экрана снизу)
@@ -58,7 +43,7 @@ const MenuSidebar = ({ isOpen, onClose }) => {
                     ✕
                 </button>
             </div>
-            
+
             {/* Содержимое меню */}
             <div className="font-montserrat px-4 text-white flex flex-col items-center justify-between" style={{ height: '85%' }}>
                 {/* Фото */}
@@ -80,12 +65,14 @@ const MenuSidebar = ({ isOpen, onClose }) => {
 
                 {/* Фамилия и имя */}
                 <p
-                    className="font-semibold text-center mt-4"
-                    style={{
-                        fontSize: 'clamp(1rem, 7.5vw, 2rem)', 
-                    }}
+                className="font-semibold text-center mt-4"
+                style={{
+                    fontSize: 'clamp(1rem, 7.5vw, 2rem)', 
+                }}
                 >
-                    {user?.firstName || "Фамилия"} {user?.lastName || "Имя"}
+                {user?.firstName && user?.lastName 
+                    ? `${user.firstName} ${user.lastName}` 
+                    : user?.firstName || user?.lastName || "Фамилия Имя"}
                 </p>
 
                 {/* Кнопка */}
