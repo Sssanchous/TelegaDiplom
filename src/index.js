@@ -14,7 +14,7 @@ const initializeTelegramSDK = async () => {
     init();
     const { initDataRaw, initData } = retrieveLaunchParams();
     console.log(initData)
-    const user = JSON.parse(initData.user);
+    const user = initData.user;  // Теперь не нужно JSON.parse, так как user уже объект
     console.log("ID пользователя:", user.id);
     console.log("Имя пользователя:", user.first_name);
     console.log("Логин пользователя:", user.username);
