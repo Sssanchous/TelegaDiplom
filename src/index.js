@@ -5,15 +5,12 @@ import "./css/index.css";
 import '@fontsource/montserrat';
 import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/700-italic.css';
-import { init, mockTelegramEnv, initData } from '@telegram-apps/sdk-react';
+import { init,initDataUser,  mockTelegramEnv, initData } from '@telegram-apps/sdk-react';
 
 const initializeTelegramSDK = async () => {
   try {
     console.log("Инициализация окружения Telegram");
-    const [miniApp] = init();
-    console.log("Чиним");
-    console.log(miniApp);
-    await miniApp.ready();
+    console.log(initDataUser());
   } catch (error) {
     console.error('Ошибка при инициализации Telegram:', error);
 
