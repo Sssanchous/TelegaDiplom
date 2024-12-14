@@ -10,6 +10,7 @@ import { init,initDataUser,  mockTelegramEnv, initData } from '@telegram-apps/sd
 const initializeTelegramSDK = async () => {
   try {
     console.log("Инициализация окружения Telegram");
+    init();
     console.log(initDataUser());
   } catch (error) {
     console.error('Ошибка при инициализации Telegram:', error);
