@@ -61,7 +61,7 @@ export const fetchDataFromAPI = async (mode, selectedOption, inputValue, token) 
 
 const handleHisoryPost = async (inputValue, selectedOption, mode, result, token) => {
   try {
-    let start_word = inputValue;
+    var start_word = inputValue;
     if (mode === 2) {
       start_word = selectedOption === "All" ? inputValue : selectedOption;
     }
