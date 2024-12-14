@@ -15,10 +15,10 @@ const MenuSidebar = ({ isOpen, onClose }) => {
 
                 setUser({
                     id: userData.id,
-                    firstName: userData.first_name,
-                    lastName: userData.last_name,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
                     username: userData.username,
-                    photoUrl: userData.photoUrl, // Сохраняем photoUrl
+                    photoUrl: userData.photoUrl,
                 });
             } else {
                 console.error('Telegram SDK не инициализирован или нет данных о пользователе.');
@@ -31,9 +31,8 @@ const MenuSidebar = ({ isOpen, onClose }) => {
     }, [isOpen]); // Запускаем эффект, когда меню открыто
 
     // Ссылка на аватар пользователя
-    const avatarUrl = user?.photoUrl
-        ? user.photoUrl
-        : `https://t.me/i/userpic/320/${user?.id}.jpg`; // Если photoUrl нет, создаем ссылку по ID
+    const avatarUrl = user?.photoUrl || null;
+
 
     const sidebarVariants = {
         hidden: { y: '100%' }, // Скрытое состояние (за пределами экрана снизу)
