@@ -17,6 +17,44 @@ const MainWindow = () => {
     const [selectedOption, setSelectedOption] = useState('');
     const [result, setResult] = useState('');
     const [isQuestionVisible, setisQuestionVisible] = useState(false);  // Состояние для видимости всплывающего окна
+    const [token, setToken] = useState(null); // Состояние для хранения токена
+
+    useEffect(() => {
+        const fetchToken = async () => {
+            try {
+                const userData = window.userData; // Данные пользователя из глобальной переменной
+                if (userData && userData.id) {
+                    const response = await fetch('/server1/login_by_tgid', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ tg_id: userData.id }),
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        const receivedToken = data.access_token;
+                        
+                        // Сохраняем токен в локальное хранилище (localStorage)
+                        localStorage.setItem("token", receivedToken);
+                        
+                        // Сохраняем токен в состояние компонента
+                        setToken(receivedToken);
+
+                        // Сохраняем токен в глобальную переменную для дальнейшего использования
+                        window.token = receivedToken;
+                    } else {
+                        console.error('Ошибка при авторизации');
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка при запросе токена:', error);
+            }
+        };
+
+        fetchToken(); // Выполняем запрос при монтировании компонента
+    }, []);
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
@@ -61,9 +99,10 @@ const MainWindow = () => {
         : [...inputValue.split(' ').filter(Boolean), 'Всё предложение']; 
 
     const handleButtonClick = async () => {
+        const token = localStorage.getItem("token");
         try {
             setIsRotating(true);
-            const data = await fetchDataFromAPI(mode, selectedOption, inputValue);
+            const data = await fetchDataFromAPI(mode, selectedOption, inputValue, token);
             setResult(data);
         } catch (error) {
             setResult('Ошибка при запросе');

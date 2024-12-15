@@ -343,7 +343,6 @@ function Web() {
     const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true);
-      fetchHistory(setHistory);
     }
   }, []);
 
