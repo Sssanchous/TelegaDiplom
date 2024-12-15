@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchDataFromAPI } from './api';  // Импортируем функцию из api.js
 import question_icon from '../images/question.png';
 import menu_icon from '../images/menu.png';
