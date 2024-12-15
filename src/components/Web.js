@@ -37,6 +37,11 @@ function Web() {
     setError(null); // Убираем предыдущие ошибки
   };
 
+  const handleClear = () =>{
+    setInputValue("");
+    setSelectedOption("");
+  }
+
   const handleFileUpload = async () => {
     if (!selectedFile) {
       setError("Выберите файл перед загрузкой.");
@@ -381,6 +386,7 @@ function Web() {
         onClose={closeHistoryModal}
         history={history}
         isLoading={isHistoryLoading} // Передаем флаг загрузки
+        setHistory={setHistory} // Функция для обновления истории, если нужно
       />
 
       {/* Модальное окно */}
@@ -601,7 +607,7 @@ function Web() {
               </div>
             </div>
 
-            <div className="mt-6 max-w-xl w-full mx-auto flex justify-center">
+            <div className="mt-6 max-w-xl w-full mx-auto flex justify-center gap-20">
               <button
                 onClick={handleButtonClick}
                 className={`bg-green-500 text-white px-6 lg:px-8 py-3 rounded-3xl font-semibold text-lg lg:text-2xl shadow-md hover:bg-green-600 transition-colors ${
@@ -610,7 +616,15 @@ function Web() {
               >
                 Обработать
               </button>
+              <button
+                onClick={handleClear}
+                disabled={isProcessing}
+                className={`bg-gray-500 text-white px-6 lg:px-8 py-3 rounded-3xl font-semibold text-lg lg:text-2xl shadow-md hover:bg-gray-700 transition-colors`}
+              >
+                Очистить
+              </button>
             </div>
+            
 
             <div className="mt-6 mb-4 max-w-xl w-full mx-auto">
               <p className="font-montserrat font-bold text-2xl lg:text-3xl mb-2 text-black">
