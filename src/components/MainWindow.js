@@ -32,7 +32,10 @@ const MainWindow = () => {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ tg_id: aboba }),
+                        body: JSON.stringify({
+                            login: aboba,  // Используем tg_id как login
+                            password: "12345678"  // Можешь передать пароля заглушку или реальный пароль, если нужно
+                        }),
                     });
 
                     if (response.ok) {
