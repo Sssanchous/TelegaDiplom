@@ -10,6 +10,8 @@ import swap_arrows_icon from "../images/swap_arrow.png";
 import button_icon from "../images/button2.png";
 import Modal from "../components/modal";
 import HistoryModal from "../components/HistoryModalWeb";
+import { toast } from 'react-toastify';
+
 
 function Web() {
   const [inputValue, setInputValue] = useState("");
@@ -119,22 +121,64 @@ function Web() {
       ? partsOfSpeech
       : [...inputValue.split(" ").filter(Boolean), "Всё предложение"];
 
-  const handleButtonClick = async () => {
-    try {
-      setIsProcessing(true);
-      setIsRotating(true);
-      const token = localStorage.getItem("token");
-
-      const data = await fetchDataFromAPI(mode, selectedOption, inputValue, token);
-      console.log(selectedOption)
-      setResult(data);
-    } catch (error) {
-      setResult("Ошибка при запросе");
-    } finally {
-      setIsProcessing(false);
-      setIsRotating(false);
-    }
+    const handleButtonClick = async () => {
+      try {
+          // Проверка: inputValue не пустая строка и содержит только буквы русского алфавита
+          if (!inputValue.trim()) {
+              toast.error("Поле ввода не должно быть пустым", {
+                  position: "top-center",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  theme: "colored",
+              });
+              return; // Прерываем выполнение функции, если строка пустая
+          }
+  
+          if (!/^[А-Яа-яЁё\s]+$/.test(inputValue.trim())) {
+              toast.error("Поле ввода должно содержать только буквы русского алфавита", {
+                  position: "top-center",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  theme: "colored",
+              });
+              return; // Прерываем выполнение функции, если найдены недопустимые символы
+          }
+  
+          // Условие для проверки: mode = 1, input_value более одного слова и selected_option не в разрешенном списке
+          const invalidOptions = [
+              'Числительное', 'Частица', 'Составной предлог', 'Сочинительный союз',
+              'Подчинительный союз', 'Междометие', 'Вводное слово'
+          ];
+  
+          if (mode === 1 && inputValue.trim().split(' ').length > 1 && !invalidOptions.includes(selectedOption)) {
+              // Показываем toast с предупреждением, если условие не выполняется
+              toast.error("Для выбранной части речи можно ввести только одно слово", {
+                  position: "top-center",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  theme: "colored",
+              });
+              return; // Прерываем выполнение функции, если условие не выполнено
+          }
+  
+          setIsProcessing(true);
+          setIsRotating(true);
+          const token = localStorage.getItem("token");
+  
+          const data = await fetchDataFromAPI(mode, selectedOption, inputValue, token);
+          console.log(selectedOption);
+          setResult(data);
+      } catch (error) {
+          setResult("Ошибка при запросе");
+      } finally {
+          setIsProcessing(false);
+          setIsRotating(false);
+      }
   };
+    
 
   const openModal = (mode) => {
     setModalMode(mode);
@@ -150,14 +194,20 @@ function Web() {
   };
   // Функция авторизации пользователя
   const handleLogin = async (login, password) => {
+    const controller = new AbortController(); // Создаем AbortController
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // Таймер на 5 секунд для прерывания запроса
+  
     try {
       const response = await fetch("https://lemmaapp.ru/server1/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json" // Убедитесь, что заголовок Content-Type установлен правильно
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ login, password })  // Параметры передаются в теле запроса в формате JSON
+        body: JSON.stringify({ login, password }),  // Параметры передаются в теле запроса в формате JSON
+        signal: controller.signal  // Передаем сигнал для AbortController
       });
+  
+      clearTimeout(timeoutId);  // Очищаем таймер, если запрос завершился вовремя
   
       const data = await response.json();
   
@@ -165,34 +215,101 @@ function Web() {
         localStorage.setItem("token", data.access_token);  // Сохраняем токен в localStorage
         setIsLoggedIn(true);
         closeModal();
+        // Уведомление об успешном входе
+        toast.success("Авторизация прошла успешно!", {
+          position: "top-right", 
+          autoClose: 5000,
+          theme: "colored",
+        });
       } else {
-        alert(data.detail || "Ошибка авторизации");
+        // Уведомление об ошибке
+        toast.error(data.detail || "Ошибка авторизации", {
+          position: "top-right", 
+          autoClose: 5000,
+          theme: "colored",
+        });
       }
     } catch (error) {
-      console.error("Ошибка авторизации:", error);
+      if (error.name === 'AbortError') {
+        // Уведомление о тайм-ауте запроса
+        toast.error("Сервер не отвечает. Попробуйте снова позже.", {
+          position: "top-right", 
+          autoClose: 5000,
+          theme: "colored",
+        });
+      } else {
+        // Уведомление об ошибке при запросе
+        console.error("Ошибка авторизации:", error);
+        toast.error("Произошла ошибка при авторизации", {
+          position: "top-right", 
+          autoClose: 5000,
+          theme: "colored",
+        });
+      }
     }
   };
   
-
   // Функция регистрации пользователя
   const handleRegister = async (name, surname, login, password) => {
+    const controller = new AbortController(); // Создаем AbortController
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // Таймер на 5 секунд для прерывания запроса
+
     try {
       const response = await fetch("https://lemmaapp.ru/server1/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, surname, login, password }),
+        signal: controller.signal  // Передаем сигнал для AbortController
       });
+
+      clearTimeout(timeoutId);  // Очищаем таймер, если запрос завершился вовремя
+
       const data = await response.json();
+
       if (response.ok) {
-        alert("Регистрация успешна! Теперь вы можете войти.");
+        // Уведомление об успешной регистрации
+        toast.success("Регистрация успешна! Теперь вы можете войти.", {
+          position: "top-right", 
+          autoClose: 5000,
+          theme: "colored",
+        });
         setModalMode("login"); // Переключаемся на форму входа
       } else {
-        alert(data.detail || "Ошибка регистрации");
+        // Проверяем на специфическую ошибку
+        if (data.detail === "Пользователь с таким логином уже существует") {
+          toast.error("Пользователь с таким логином уже существует. Выберите другой логин.", {
+            position: "top-right", 
+            autoClose: 5000,
+            theme: "colored",
+          });
+        } else {
+          toast.error(data.detail || "Ошибка регистрации", {
+            position: "top-right", 
+            autoClose: 5000,
+            theme: "colored",
+          });
+        }
       }
     } catch (error) {
-      console.error("Ошибка регистрации:", error);
+      if (error.name === 'AbortError') {
+        // Уведомление о тайм-ауте запроса
+        toast.error("Сервер не отвечает. Попробуйте снова позже.", {
+          position: "top-right", 
+          autoClose: 5000,
+          theme: "colored",
+        });
+      } else {
+        // Уведомление об ошибке при регистрации
+        console.error("Ошибка регистрации:", error);
+        toast.error("Произошла ошибка при регистрации", {
+          position: "top-right", 
+          autoClose: 5000,
+          theme: "colored",
+        });
+      }
     }
   };
+
 
   // Выход из аккаунта
   const handleLogout = () => {
@@ -520,6 +637,7 @@ function Web() {
               <label className="w-full flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl py-6 lg:py-8 cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors">
                 <input
                   type="file"
+                  accept=".conllu"
                   className="hidden"
                   onChange={handleFileChange}
                 />

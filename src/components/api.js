@@ -61,6 +61,7 @@ export const fetchDataFromAPI = async (mode, selectedOption, inputValue, token) 
 
 const handleHisoryPost = async (inputValue, selectedOption, mode, result, token) => {
   try {
+    console.log(token);
     var start_word = inputValue;
     if (mode === 2) {
       start_word = selectedOption === "All" ? inputValue : selectedOption;
@@ -76,6 +77,7 @@ const handleHisoryPost = async (inputValue, selectedOption, mode, result, token)
         word: start_word,
         lemmatize_type: mode,
         result: result,
+        selected_option: selectedOption,
       }),
     });
 
@@ -149,20 +151,13 @@ export const handleRegister = async (name, surname, login, password, setModalMod
 export const fetchHistory = async (setHistory, setIsLoggedIn) => {
   try {
     const token = localStorage.getItem("token");
+    console.log(token);
     if (!token) {
-      alert("Необходимо авторизоваться");
-      return;
-    }
-
-    const decodedToken = JSON.parse(atob(token.split(".")[1]));
-    const userId = decodedToken.sub;
-
-    if (!userId) {
       alert("Ошибка авторизации, не найден user_id");
       return;
     }
 
-    const response = await fetch(`${API_BASE_URL}/history/${userId}`, {
+    const response = await fetch(`${API_BASE_URL}/history`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

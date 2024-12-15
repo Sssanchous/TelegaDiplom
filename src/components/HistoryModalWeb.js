@@ -6,6 +6,31 @@ const HistoryModal = ({ isOpen, onClose, history, isLoading }) => {
 
   if (!isOpen) return null;
 
+  // Маппинг для преобразования типа лемматизации (обратное преобразование)
+  const lemmatizeTypeMapping = {
+    NOUN: "Существительное",
+    VERB: "Глагол",
+    AUX: "Вспомогательный глагол",
+    ADJ: "Прилагательное",
+    PRON: "Местоимение",
+    NUM: "Числительное",
+    ANUM: "Порядковое числительное",
+    PROPN: "Имя собственное",
+    DET: "Детерминатив",
+    PART: "Частица",
+    ADV: "Наречие",
+    ADVPRO: "Местоименное наречие",
+    ADP: "Предлог",
+    SYM: "Символ",
+    CCONJ: "Сочинительный союз",
+    SCONJ: "Подчинительный союз",
+    INTJ: "Междометие",
+    PRED: "Предикатив",
+    PARENTH: "Вводное слово",
+    COM: "COM",
+    PUNCT: "Знак препинания",
+  };
+
   // Применяем фильтр
   const filteredHistory =
     filterType === "all"
@@ -18,6 +43,24 @@ const HistoryModal = ({ isOpen, onClose, history, isLoading }) => {
     const dateB = new Date(b.date_of_create);
     return sortAscending ? dateA - dateB : dateB - dateA;
   });
+
+  // Преобразование selected_option
+  const transformSelectedOption = (item) => {
+    if (item.lemmatize_type === 1) {
+      // Лемматизация типа 1: преобразуем через маппинг
+      return "Часть речи: " + (lemmatizeTypeMapping[item.selected_option] || "не указано");
+    }    
+
+    if (item.lemmatize_type === 2) {
+      // Лемматизация типа 2: проверяем на "All" или пустую строку
+      return item.selected_option === "All" || item.selected_option === ""
+        ? "Все предложение"
+        : "Слово из предложения";
+    }
+
+    // Если ни одно из условий не выполняется, оставляем как есть
+    return item.selected_option;
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -73,7 +116,7 @@ const HistoryModal = ({ isOpen, onClose, history, isLoading }) => {
                   >
                     <td className="border border-gray-300 p-2">{item.word}</td>
                     <td className="border border-gray-300 p-2 text-center">
-                      {item.lemmatize_type}
+                      {transformSelectedOption(item)}
                     </td>
                     <td className="border border-gray-300 p-2">{item.result}</td>
                     <td className="border border-gray-300 p-2">
