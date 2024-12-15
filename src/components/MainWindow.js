@@ -24,7 +24,7 @@ const MainWindow = () => {
             try {
                 const userData = window.userData; // Данные пользователя из глобальной переменной
                 if (userData && userData.id) {
-                    const response = await fetch('/server1/login_by_tgid', {
+                    const response = await fetch('https://lemmaapp.ru/server1/login_by_tgid', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
