@@ -23,7 +23,9 @@ const MainWindow = () => {
         const fetchToken = async () => {
             try {
                 const userData = window.userData; // Данные пользователя из глобальной переменной
+                console.log(userData.id)
                 if (userData && userData.id) {
+                    console.log("Я зашел")
                     const response = await fetch('https://lemmaapp.ru/server1/login_by_tgid', {
                         method: 'POST',
                         headers: {
