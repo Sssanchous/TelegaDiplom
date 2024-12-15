@@ -400,7 +400,7 @@ function Web() {
       <main className="container mx-auto px-4 py-8 lg:py-12 text-center lg:w-[80%] w-full">
         <div className="flex flex-col pb-4 border-b border-gray-300">
           <h2 className="text-3xl lg:text-5xl font-bold text-gray-800 mb-4">Лемматизация слов</h2>
-          <p className="text-gray-600 text-xl lg:text-2xl mb-8">Сгенирируйте лемму для вашего текста</p>
+          <p className="text-gray-600 text-xl lg:text-2xl mb-8">Сгенерируйте лемму для вашего текста</p>
         </div>
 
         <div className="py-5 px-2 mb-16 shadow-sm flex flex-col lg:flex-row items-center gap-24 border-b border-gray-300">
