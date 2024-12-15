@@ -26,12 +26,13 @@ const MainWindow = () => {
                 console.log(userData.id)
                 if (userData && userData.id) {
                     console.log("Я зашел")
+                    var aboba = userData.id.toString();
                     const response = await fetch('https://lemmaapp.ru/server1/login_by_tgid', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ tg_id: userData.id }),
+                        body: JSON.stringify({ tg_id: aboba }),
                     });
 
                     if (response.ok) {
