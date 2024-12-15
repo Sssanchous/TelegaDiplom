@@ -41,6 +41,31 @@ const HistoryModal = ({ isOpen, onClose, history, isLoading }) => {
 
   const currentItem = history[currentIndex];
 
+  // Маппинг для преобразования типа лемматизации
+  const lemmatizeTypeMapping = {
+    NOUN: "Существительное",
+    VERB: "Глагол",
+    AUX: "Вспомогательный глагол",
+    ADJ: "Прилагательное",
+    PRON: "Местоимение",
+    NUM: "Числительное",
+    ANUM: "Порядковое числительное",
+    PROPN: "Имя собственное",
+    DET: "Детерминатив",
+    PART: "Частица",
+    ADV: "Наречие",
+    ADVPRO: "Местоименное наречие",
+    ADP: "Предлог",
+    SYM: "Символ",
+    CCONJ: "Сочинительный союз",
+    SCONJ: "Подчинительный союз",
+    INTJ: "Междометие",
+    PRED: "Предикатив",
+    PARENTH: "Вводное слово",
+    COM: "COM",
+    PUNCT: "Знак препинания",
+  };
+
   return (
     <motion.div
       initial="hidden"
@@ -76,7 +101,7 @@ const HistoryModal = ({ isOpen, onClose, history, isLoading }) => {
 
               {/* Тип */}
               <p className="text-gray-200 text-xl text-center ">
-                Тип: {currentItem.lemmatize_type}
+                Тип: {lemmatizeTypeMapping[currentItem.selected_option] || "Не указано"}
               </p>
 
               {/* Слово и результат */}

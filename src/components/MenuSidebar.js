@@ -20,18 +20,18 @@ const MenuSidebar = ({ isOpen, onClose }) => {
     }, [isOpen]);
 
     // Обработчик для открытия модального окна истории
-    const handleHistoryClick = async () => {
-        setIsLoading(true); // Устанавливаем флаг загрузки
-        try {
-            await fetchHistory(setHistory); // Получаем историю
-            setIsHistoryOpen(true); // Открываем модальное окно
-        } catch (error) {
-            console.error("Ошибка при загрузке истории:", error);
-        } finally {
-            setIsLoading(false); // Сбрасываем флаг загрузки
-        }
-    };
-    
+const handleHistoryClick = async () => {
+    setIsLoading(true); // Устанавливаем флаг загрузки
+    try {
+        await fetchHistory(setHistory); // Получаем историю
+        setIsHistoryOpen(true); // Открываем модальное окно
+    } catch (error) {
+        console.error("Ошибка при загрузке истории:", error);
+    } finally {
+        setIsLoading(false); // Сбрасываем флаг загрузки
+    }
+};
+
     // Анимации для бокового меню
     const sidebarVariants = {
         hidden: { y: '100%' },
