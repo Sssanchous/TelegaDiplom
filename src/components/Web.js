@@ -140,15 +140,15 @@ function Web() {
               return; // Прерываем выполнение функции, если строка пустая
           }
   
-          if (!/^[А-Яа-яЁё\s]+$/.test(inputValue.trim())) {
-              toast.error("Поле ввода должно содержать только буквы русского алфавита", {
-                  position: "top-center",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  theme: "colored",
-              });
-              return; // Прерываем выполнение функции, если найдены недопустимые символы
+          if (!/^[А-Яа-яЁё\s,.\-?;!:]+$/.test(inputValue.trim())) {
+            toast.error("Поле ввода должно содержать только буквы русского алфавита, пробелы и допустимые знаки препинания", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                theme: "colored",
+            });
+            return; // Прерываем выполнение функции, если найдены недопустимые символы
           }
   
           // Условие для проверки: mode = 1, input_value более одного слова и selected_option не в разрешенном списке
@@ -244,7 +244,6 @@ function Web() {
         });
       } else {
         // Уведомление об ошибке при запросе
-        console.error("Ошибка авторизации:", error);
         toast.error("Произошла ошибка при авторизации", {
           position: "top-right", 
           autoClose: 5000,
@@ -305,7 +304,6 @@ function Web() {
         });
       } else {
         // Уведомление об ошибке при регистрации
-        console.error("Ошибка регистрации:", error);
         toast.error("Произошла ошибка при регистрации", {
           position: "top-right", 
           autoClose: 5000,
@@ -329,7 +327,6 @@ function Web() {
     try {
       await fetchHistory(setHistory);
     } catch (error) {
-      console.error("Ошибка при загрузке истории:", error);
     } finally {
       setIsHistoryLoading(false); // Сбрасываем флаг загрузки
     }
