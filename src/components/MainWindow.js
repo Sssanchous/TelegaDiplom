@@ -140,7 +140,7 @@ const MainWindow = () => {
     };
 
     return (
-        <div className="bg-gray-100 min-h-[100dvh] w-full flex flex-col px-4 max-w-md mx-auto overflow-y-auto">
+        <div className="bg-gray-100 min-h-screen w-full flex flex-col px-4 max-w-md mx-auto">
             {/* Шапка */}
             <div className="flex justify-between px-5 mt-6">
                 {/* Кнопки вопроса и меню */}
