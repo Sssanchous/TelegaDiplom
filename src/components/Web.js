@@ -516,7 +516,7 @@ function Web() {
  
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 lg:py-12 text-center lg:w-[80%] w-full">
+      <main className="w-full max-w-4xl mx-auto px-4 py-8 lg:py-12 text-center">
         <div className="flex flex-col pb-4 border-b border-gray-300">
           <h2 className="text-3xl lg:text-5xl font-bold text-gray-800 mb-4">Лемматизация слов</h2>
           <p className="text-gray-600 text-xl lg:text-2xl mb-8">Сгенерируйте лемму для вашего текста</p>
