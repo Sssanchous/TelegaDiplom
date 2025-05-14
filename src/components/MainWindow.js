@@ -139,124 +139,105 @@ const MainWindow = () => {
         setIsMenuOpen(false); // Закрываем меню
     };
 
+    // ... (импорты и useState/useEffect как раньше)
+
     return (
-        <div className="bg-gray-100 h-screen w-full flex flex-col">
-            {/* Шапка */}
-            <div className="flex justify-between px-5 mt-6">
-                {/* Кнопки вопроса и меню */}
-                <img 
-                    src={question_icon} 
-                    alt="question" 
-                    className="w-8 h-8 cursor-pointer" 
-                    onClick={handleQuestionClick} // Обработчик клика на кнопку вопроса
-                />
-                <img
-                    src={menu_icon}
-                    alt="menu"
-                    className="w-8 h-8 cursor-pointer"
-                    onClick={handleMenuClick} // Обработчик клика для открытия меню
-                />
-            </div>
-
-            {/* Логотип */}
-            <div className="flex-grow flex justify-center items-center">
-                <img 
-                    src={logo_icon} 
-                    alt="logo" 
-                    className="w-[50%] h-auto" 
-                />
-            </div>
-
-            {/* Основной контент с растяжением */}
-            <div className="flex flex-col flex-grow mt-4 px-[9%]">
-                {/* Ваш основной контент */}
-                <div>
-                    {/* Переключатель режимов */}
-                    <div className='flex items-center'>
-                        <p className='font-montserrat font-bold italic text-lg'>
-                            {mode === 1 ? 'Ваше слово' : 'Ваше предложение'}
-                        </p>
-                        <button
-                            onClick={handleSwapClick}
-                            className="focus:outline-none hover:scale-105 transition-transform mx-1"
-                        >
-                            <img
-                                src={swap_arrows_icon}
-                                alt="swap"
-                                className="w-8 h-8"
-                            />
-                        </button>
-                        <p className='font-montserrat font-bold italic text-lg'>
-                            {mode === 1 ? 'предложение' : 'слово'}
-                        </p>
-                    </div>
-                    {/* Поле для ввода изначального текста */}
-                    <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 mb-4 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
-                        <input
-                            type="text"
-                            value={inputValue}
-                            onChange={handleInputChange}
-                            placeholder="Введите слово"
-                            className="w-full bg-transparent border-none outline-none text-lg"
-                        />
-                    </div>
-                </div>
-                {/* Второй блок */}
-                <div className="flex justify-between items-center">
-                    <div className="flex-grow">
-                        {/* Название параметра */}
-                        <div className="flex">
-                            <p className="font-montserrat font-bold italic text-lg">
-                                {mode === 1 ? 'Часть речи' : 'Выбранное слово'}
-                            </p>
-                        </div>
-                        {/* Настройки параметра */}
-                        <div className="w-4/5 bg-white text-black py-4 rounded-2xl text-lg mt-3 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
-                            <select
-                                value={selectedOption}
-                                onChange={handleSelectChange}
-                                className="w-full bg-transparent border-none outline-none text-lg"
-                            >
-                                <option value="" disabled>
-                                    {mode === 1 ? 'Не выбрана часть речи' : 'Не выбрано слово'}
-                                </option>
-                                {options.map((option, index) => (
-                                    <option key={index} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                    {/* Кнопка лемматизации */}
-                    <div className="flex-shrink-0 ml-4 mt-3">
-                        <button
-                            onClick={handleButtonClick}
-                            className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
-                        >
-                            <img src={button_icon} alt="button" className="w-32 h-32" />
-                        </button>
-                    </div>
-                </div>
-                {/* Результат */}
-                <div className='mt-5'>
-                    <p className='font-montserrat font-bold italic text-lg'>Лемма вашего слова</p>
-                    <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 mb-4 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
-                        <input
-                            type="text"
-                            value={result}
-                            readOnly
-                            placeholder="Результат"
-                            className="w-full bg-transparent border-none outline-none text-lg"
-                        />
-                    </div>
-                </div>
-            </div>
-        
-            {/* Всплывающее окно */}
-            {isQuestionVisible && <QuestionScreen onClose={handleCloseQuestionWindow} />}
-            <MenuSidebar isOpen={isMenuOpen} onClose={handleCloseMenu} />
+    <div className="bg-gray-100 min-h-[100dvh] w-full flex justify-center px-4 overflow-y-auto">
+        <div className="w-full max-w-sm flex flex-col">
+        {/* Шапка */}
+        <div className="flex justify-between mt-6">
+            <img src={question_icon} alt="question" className="w-8 h-8 cursor-pointer" onClick={handleQuestionClick} />
+            <img src={menu_icon} alt="menu" className="w-8 h-8 cursor-pointer" onClick={handleMenuClick} />
         </div>
+
+        {/* Логотип */}
+        <div className="mt-6 flex justify-center">
+            <img src={logo_icon} alt="logo" className="w-[70%] h-auto" />
+        </div>
+
+        {/* Контент */}
+        <div className="mt-6">
+            {/* Переключатель режимов */}
+            <div className="flex items-center">
+            <p className="font-montserrat font-bold italic text-lg">
+                {mode === 1 ? 'Ваше слово' : 'Ваше предложение'}
+            </p>
+            <button
+                onClick={handleSwapClick}
+                className="focus:outline-none hover:scale-105 transition-transform mx-1"
+            >
+                <img src={swap_arrows_icon} alt="swap" className="w-8 h-8" />
+            </button>
+            <p className="font-montserrat font-bold italic text-lg">
+                {mode === 1 ? 'предложение' : 'слово'}
+            </p>
+            </div>
+
+            {/* Поле ввода */}
+            <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 mb-4 flex items-center justify-between px-3 shadow-xl border border-gray-500">
+            <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="Введите слово"
+                className="w-full bg-transparent border-none outline-none text-lg"
+            />
+            </div>
+
+            {/* 🔧 Адаптивный блок: Часть речи + кнопка */}
+            <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-4 mt-4">
+            {/* Селект */}
+            <div className="w-full">
+                <p className="font-montserrat font-bold italic text-lg">
+                {mode === 1 ? 'Часть речи' : 'Выбранное слово'}
+                </p>
+                <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 flex items-center justify-between px-3 shadow-xl border border-gray-500">
+                <select
+                    value={selectedOption}
+                    onChange={handleSelectChange}
+                    className="w-full bg-transparent border-none outline-none text-lg"
+                >
+                    <option value="" disabled>
+                    {mode === 1 ? 'Не выбрана часть речи' : 'Не выбрано слово'}
+                    </option>
+                    {options.map((option, index) => (
+                    <option key={index} value={option}>{option}</option>
+                    ))}
+                </select>
+                </div>
+            </div>
+
+            {/* Кнопка */}
+            <div className="mt-3 sm:mt-8">
+                <button
+                onClick={handleButtonClick}
+                className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
+                >
+                <img src={button_icon} alt="button" className="w-28 h-28 sm:w-32 sm:h-32" />
+                </button>
+            </div>
+            </div>
+
+            {/* Результат */}
+            <div className='mt-5'>
+            <p className='font-montserrat font-bold italic text-lg'>Лемма вашего слова</p>
+            <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 mb-4 flex items-center justify-between px-3 shadow-xl border border-gray-500">
+                <input
+                type="text"
+                value={result}
+                readOnly
+                placeholder="Результат"
+                className="w-full bg-transparent border-none outline-none text-lg"
+                />
+            </div>
+            </div>
+        </div>
+        </div>
+
+        {/* Окна */}
+        {isQuestionVisible && <QuestionScreen onClose={handleCloseQuestionWindow} />}
+        <MenuSidebar isOpen={isMenuOpen} onClose={handleCloseMenu} />
+    </div>
     );
 };
 
