@@ -87,7 +87,7 @@ const MainWindow = () => {
 
   return (
     <div className="bg-gray-100 h-screen w-full flex flex-col items-center overflow-hidden">
-      <div className="w-full max-w-sm px-4 py-3 flex flex-col justify-between flex-grow overflow-y-auto">
+      <div className="w-full max-w-sm px-4 py-1 flex flex-col justify-between flex-grow overflow-y-auto">
         {/* Шапка */}
         <div className="flex justify-between mb-4">
           <img
@@ -145,7 +145,7 @@ const MainWindow = () => {
           </div>
 
           {/* Селект + Кнопка */}
-          <div className="flex justify-between items-end gap-2">
+          <div className="flex items-center justify-between gap-2 mt-2">
             <div className="flex-grow">
               <p className="font-montserrat font-bold italic text-lg mb-2">
                 {mode === 1 ? 'Часть речи' : 'Выбранное слово'}
