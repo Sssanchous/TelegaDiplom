@@ -140,7 +140,7 @@ const MainWindow = () => {
     };
 
     return (
-        <div className="bg-gray-100 h-screen w-full flex flex-col items-center overflow-hidden">
+        <div className="bg-gray-100 h-screen w-full flex flex-col">
             {/* Шапка */}
             <div className="flex justify-between px-5 mt-6">
                 {/* Кнопки вопроса и меню */}
@@ -168,7 +168,7 @@ const MainWindow = () => {
             </div>
 
             {/* Основной контент с растяжением */}
-            <div className="flex flex-col w-full max-w-sm px-4 flex-grow overflow-y-auto">
+            <div className="flex flex-col flex-grow mt-4 px-[9%]">
                 {/* Ваш основной контент */}
                 <div>
                     {/* Переключатель режимов */}
@@ -202,7 +202,7 @@ const MainWindow = () => {
                     </div>
                 </div>
                 {/* Второй блок */}
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-3">
+                <div className="flex justify-between items-center">
                     <div className="flex-grow">
                         {/* Название параметра */}
                         <div className="flex">
