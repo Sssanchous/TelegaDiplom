@@ -202,8 +202,8 @@ const MainWindow = () => {
                     </div>
                 </div>
                 {/* Второй блок */}
-                <div className="flex justify-between items-center">
-                    <div className="flex-grow">
+                <div className="flex flex-row items-center justify-between gap-4 mt-4">
+                    <div className="w-2/3 min-w-[280px] sm:min-w-[320px]">
                         {/* Название параметра */}
                         <div className="flex">
                             <p className="font-montserrat font-bold italic text-lg">
@@ -211,11 +211,11 @@ const MainWindow = () => {
                             </p>
                         </div>
                         {/* Настройки параметра */}
-                        <div className="w-4/5 bg-white text-black py-4 rounded-2xl text-lg mt-3 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
+                        <div className="w-full bg-white text-black py-3 rounded-2xl text-base mt-3 px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
                             <select
                                 value={selectedOption}
                                 onChange={handleSelectChange}
-                                className="w-full bg-transparent border-none outline-none text-lg"
+                                className="w-full bg-transparent border-none outline-none text-base"
                             >
                                 <option value="" disabled>
                                     {mode === 1 ? 'Не выбрана часть речи' : 'Не выбрано слово'}
@@ -229,12 +229,12 @@ const MainWindow = () => {
                         </div>
                     </div>
                     {/* Кнопка лемматизации */}
-                    <div className="flex-shrink-0 ml-4 mt-3">
+                    <div className="flex-shrink-0 ml-2 mt-2 sm:mt-0">
                         <button
                             onClick={handleButtonClick}
                             className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
                         >
-                            <img src={button_icon} alt="button" className="w-32 h-32" />
+                            <img src={button_icon} alt="button" className="w-20 h-20 sm:w-24 sm:h-24" />
                         </button>
                     </div>
                 </div>
