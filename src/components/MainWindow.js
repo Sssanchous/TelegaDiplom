@@ -229,7 +229,7 @@ const MainWindow = () => {
                         </div>
                     </div>
                     {/* Кнопка лемматизации */}
-                    <div className="ml-2 flex-shrink-0 mt-2">
+                    <div className="ml-2 flex-shrink-0 mt-3">
                         <button
                             onClick={handleButtonClick}
                             className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
