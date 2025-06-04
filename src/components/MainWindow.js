@@ -229,7 +229,7 @@ const MainWindow = () => {
                         </div>
                     </div>
                     {/* Кнопка лемматизации */}
-                    <div className="ml-2 flex-shrink-0">
+                    <div className="ml-2 flex-shrink-0 mt-2">
                         <button
                             onClick={handleButtonClick}
                             className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
@@ -238,7 +238,7 @@ const MainWindow = () => {
                         </button>
                     </div>
                 </div>
-                {/* Результат */}
+                {/* Результат */}ф
                 <div className='mt-5'>
                     <p className='font-montserrat font-bold italic text-base mb-2'>Лемма вашего слова</p>
                     <div className="w-full bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 flex items-center">
