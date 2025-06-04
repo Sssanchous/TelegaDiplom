@@ -178,12 +178,12 @@ const MainWindow = () => {
                         </p>
                         <button
                             onClick={handleSwapClick}
-                            className="focus:outline-none hover:scale-105 transition-transform mx-1"
+                            className="ml-2 focus:outline-none hover:scale-105 transition-transform"
                         >
                             <img
                                 src={swap_arrows_icon}
                                 alt="swap"
-                                className="w-8 h-8"
+                                className="w-6 h-6"
                             />
                         </button>
                         <p className='font-montserrat font-bold italic text-lg'>
@@ -191,27 +191,27 @@ const MainWindow = () => {
                         </p>
                     </div>
                     {/* Поле для ввода изначального текста */}
-                    <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 mb-4 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
+                    <div className="mt-3 w-full bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 flex items-center">
                         <input
                             type="text"
                             value={inputValue}
                             onChange={handleInputChange}
                             placeholder="Введите слово"
-                            className="w-full bg-transparent border-none outline-none text-lg"
+                            className="w-full bg-transparent border-none outline-none text-sm"
                         />
                     </div>
                 </div>
                 {/* Второй блок */}
-                <div className="flex justify-between items-center">
+                <div className="flex items-center mb-6">
                     <div className="flex-grow">
                         {/* Название параметра */}
                         <div className="flex">
-                            <p className="font-montserrat font-bold italic text-lg">
+                            <p className="font-montserrat font-bold italic text-base">
                                 {mode === 1 ? 'Часть речи' : 'Выбранное слово'}
                             </p>
                         </div>
                         {/* Настройки параметра */}
-                        <div className="w-4/5 bg-white text-black py-4 rounded-2xl text-lg mt-3 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
+                        <div className="mt-2 flex flex-shrink flex-grow bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 items-center">
                             <select
                                 value={selectedOption}
                                 onChange={handleSelectChange}
@@ -229,25 +229,25 @@ const MainWindow = () => {
                         </div>
                     </div>
                     {/* Кнопка лемматизации */}
-                    <div className="flex-shrink-0 ml-4 mt-3">
+                    <div className="ml-2 flex-shrink-0 mt-2">
                         <button
                             onClick={handleButtonClick}
                             className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
                         >
-                            <img src={button_icon} alt="button" className="w-32 h-32" />
+                            <img src={button_icon} alt="button" className="w-full max-w-[80px] h-auto" />
                         </button>
                     </div>
                 </div>
-                {/* Результат */}
+                {/* Результат */}ф
                 <div className='mt-5'>
-                    <p className='font-montserrat font-bold italic text-lg'>Лемма вашего слова</p>
-                    <div className="w-full bg-white text-black py-4 rounded-2xl text-lg mt-3 mb-4 flex items-center justify-between px-3 shadow-xl hover:shadow-xl transition-shadow duration-300 border border-2 border-gray-500">
+                    <p className='font-montserrat font-bold italic text-base mb-2'>Лемма вашего слова</p>
+                    <div className="w-full bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 flex items-center">
                         <input
                             type="text"
                             value={result}
                             readOnly
                             placeholder="Результат"
-                            className="w-full bg-transparent border-none outline-none text-lg"
+                            className="w-full bg-transparent border-none outline-none text-sm"
                         />
                     </div>
                 </div>
