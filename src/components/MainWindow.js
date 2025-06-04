@@ -202,7 +202,7 @@ const MainWindow = () => {
                     </div>
                 </div>
                 {/* Второй блок */}
-                <div className="flex items-center mb-6">
+                <div className="flex items-center mb-3">
                     <div className="flex-grow">
                         {/* Название параметра */}
                         <div className="flex">
@@ -238,8 +238,8 @@ const MainWindow = () => {
                         </button>
                     </div>
                 </div>
-                {/* Результат */}ф
-                <div className='mt-5'>
+                {/* Результат */}
+                <div className='mt-1'>
                     <p className='font-montserrat font-bold italic text-base mb-2'>Лемма вашего слова</p>
                     <div className="w-full bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 flex items-center">
                         <input
