@@ -197,7 +197,7 @@ const MainWindow = () => {
                             value={inputValue}
                             onChange={handleInputChange}
                             placeholder="Введите слово"
-                            className="w-full bg-transparent border-none outline-none text-sm"
+                            className="w-full bg-transparent border-none outline-none text-lg"
                         />
                     </div>
                 </div>
@@ -234,20 +234,20 @@ const MainWindow = () => {
                             onClick={handleButtonClick}
                             className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
                         >
-                            <img src={button_icon} alt="button" className="w-full max-w-[80px] h-auto" />
+                            <img src={button_icon} alt="button" className="w-full max-w-[100px] h-auto" />
                         </button>
                     </div>
                 </div>
                 {/* Результат */}
                 <div className='mt-1'>
                     <p className='font-montserrat font-bold italic text-base mb-2'>Лемма вашего слова</p>
-                    <div className="w-full bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 flex items-center">
+                    <div className="w-full bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 flex items-center ">
                         <input
                             type="text"
                             value={result}
                             readOnly
                             placeholder="Результат"
-                            className="w-full bg-transparent border-none outline-none text-sm"
+                            className="w-full bg-transparent border-none outline-none text-lg"
                         />
                     </div>
                 </div>
