@@ -178,7 +178,7 @@ const MainWindow = () => {
                         </p>
                         <button
                             onClick={handleSwapClick}
-                            className="ml-2 focus:outline-none hover:scale-105 transition-transform"
+                            className="ml-1 focus:outline-none hover:scale-105 transition-transform"
                         >
                             <img
                                 src={swap_arrows_icon}
@@ -186,12 +186,12 @@ const MainWindow = () => {
                                 className="w-6 h-6"
                             />
                         </button>
-                        <p className='font-montserrat font-bold italic text-lg'>
+                        <p className='font-montserrat font-bold italic text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl'>
                             {mode === 1 ? 'предложение' : 'слово'}
                         </p>
                     </div>
                     {/* Поле для ввода изначального текста */}
-                    <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-6 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mb-4">
+                    <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mt-1 sm:mt-2 md:mt-3 mb-1">
                         <input
                             type="text"
                             value={inputValue}
@@ -202,20 +202,20 @@ const MainWindow = () => {
                     </div>
                 </div>
                 {/* Второй блок */}
-                <div className="flex items-center mb-3">
+                <div className="flex items-center mb-1">
                     <div className="flex-grow">
                         {/* Название параметра */}
                         <div className="flex">
-                            <p className="font-montserrat font-bold italic text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
+                            <p className="font-montserrat font-bold italic text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-2">
                                 {mode === 1 ? 'Часть речи' : 'Выбранное слово'}
                             </p>
                         </div>
                         {/* Настройки параметра */}
-                        <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-6 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mb-4">
+                        <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-6 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mb-0.5">
                             <select
                                 value={selectedOption}
                                 onChange={handleSelectChange}
-                                className="w-full bg-transparent border-none outline-none text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+                                className="w-full bg-transparent border-none outline-none text-base sm:text-lg md:text-xl lg:text-2xl"
                             >
                                 <option value="" disabled>
                                     {mode === 1 ? 'Не выбрана часть речи' : 'Не выбрано слово'}
@@ -234,14 +234,14 @@ const MainWindow = () => {
                             onClick={handleButtonClick}
                             className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
                         >
-                            <img src={button_icon} alt="button" className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48" />
+                            <img src={button_icon} alt="button" className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 " />
                         </button>
                     </div>
                 </div>
                 {/* Результат */}
                 <div className='mt-1'>
                     <p className='font-montserrat font-bold italic text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-2'>Лемма вашего слова</p>
-                    <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-6 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mb-4">
+                    <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-6 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mb-0.5">
                         <input
                             type="text"
                             value={result}
