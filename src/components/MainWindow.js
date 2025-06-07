@@ -247,7 +247,7 @@ const MainWindow = () => {
                             value={result}
                             readOnly
                             placeholder="Результат"
-                            className="w-full bg-transparent border-none outline-none text-lg"
+                            className="w-full bg-transparent border-none outline-none text-base sm:text-lg md:text-xl lg:text-2xl"
                         />
                     </div>
                 </div>
