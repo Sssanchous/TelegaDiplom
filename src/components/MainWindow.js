@@ -206,7 +206,7 @@ const MainWindow = () => {
                     <div className="flex-grow">
                         {/* Название параметра */}
                         <div className="flex">
-                            <p className="font-montserrat font-bold italic text-base">
+                            <p className="font-montserrat font-bold italic text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
                                 {mode === 1 ? 'Часть речи' : 'Выбранное слово'}
                             </p>
                         </div>
