@@ -173,7 +173,7 @@ const MainWindow = () => {
                 <div>
                     {/* Переключатель режимов */}
                     <div className='flex items-center'>
-                        <p className='font-montserrat font-bold italic text-base'>
+                        <p className='font-montserrat font-bold italic text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl'>
                             {mode === 1 ? 'Ваше слово' : 'Ваше предложение'}
                         </p>
                         <button
@@ -191,13 +191,13 @@ const MainWindow = () => {
                         </p>
                     </div>
                     {/* Поле для ввода изначального текста */}
-                    <div className="mt-3 w-full bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 flex items-center">
+                    <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-6 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mb-4">
                         <input
                             type="text"
                             value={inputValue}
                             onChange={handleInputChange}
                             placeholder="Введите слово"
-                            className="w-full bg-transparent border-none outline-none text-lg"
+                            className="w-full bg-transparent border-none outline-none text-base sm:text-lg md:text-xl lg:text-2xl"
                         />
                     </div>
                 </div>
@@ -211,11 +211,11 @@ const MainWindow = () => {
                             </p>
                         </div>
                         {/* Настройки параметра */}
-                        <div className="mt-2 flex flex-shrink flex-grow bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 items-center">
+                        <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-6 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mb-4">
                             <select
                                 value={selectedOption}
                                 onChange={handleSelectChange}
-                                className="w-full bg-transparent border-none outline-none text-lg"
+                                className="w-full bg-transparent border-none outline-none text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
                             >
                                 <option value="" disabled>
                                     {mode === 1 ? 'Не выбрана часть речи' : 'Не выбрано слово'}
@@ -229,19 +229,19 @@ const MainWindow = () => {
                         </div>
                     </div>
                     {/* Кнопка лемматизации */}
-                    <div className="ml-2 flex-shrink-0 mt-2">
+                    <div className="flex-shrink-0 mt-4 ml-4 sm:ml-6 md:ml-8 lg:ml-10 xl:ml-12">
                         <button
                             onClick={handleButtonClick}
                             className={`focus:outline-none transition-transform ${isRotating ? 'animate-spin' : ''}`}
                         >
-                            <img src={button_icon} alt="button" className="w-full max-w-[100px] h-auto" />
+                            <img src={button_icon} alt="button" className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48" />
                         </button>
                     </div>
                 </div>
                 {/* Результат */}
                 <div className='mt-1'>
-                    <p className='font-montserrat font-bold italic text-base mb-2'>Лемма вашего слова</p>
-                    <div className="w-full bg-white text-black py-2 px-3 rounded-xl shadow-md border border-gray-300 flex items-center ">
+                    <p className='font-montserrat font-bold italic text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-2'>Лемма вашего слова</p>
+                    <div className="w-full bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-6 px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 rounded-xl shadow-md border border-gray-300 flex items-center transition-all mb-4">
                         <input
                             type="text"
                             value={result}
